@@ -66,7 +66,7 @@ cd flores200_dataset
 wget https://tinyurl.com/flores200dataset
 
 # spell-errors
-mkdir datasets/custom_typo_injected
+mkdir -p datasets/custom_typo_injected
 cd datasets/custom_typo_injected
 wget https://norvig.com/ngrams/spell-errors.txt
 ```
