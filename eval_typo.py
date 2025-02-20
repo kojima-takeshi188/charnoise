@@ -205,9 +205,6 @@ def eval_typo(args):
     fix_seed(args.random_seed)
 
     model, tokenizer, config = load_model(args)
-    
-    if tokenizer is not None:
-      tokenizer.pad_token = tokenizer.eos_token
 
     if args.eval_noise_dataset == "github-typo-corpus":
         data_dir = os.path.join("github-typo-corpus", "github-typo-corpus.v1.0.0.jsonl")
@@ -215,9 +212,6 @@ def eval_typo(args):
     elif args.eval_noise_dataset == "bea60k":
         data_dir = os.path.join("bea60k", "test.bea60k")
         ds = MyDataset_bea60k(data_dir=data_dir)
-    elif args.eval_noise_dataset == "jfleg":
-        data_dir = "jfleg"
-        ds = MyDataset_jfleg(data_dir=data_dir)
     
     print(data_dir)
     

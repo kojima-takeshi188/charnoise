@@ -212,16 +212,9 @@ def eval_noise(args, model=None, tokenizer=None):
 
     if model is None and tokenizer is None:
         model, tokenizer, _ = load_model(args)
-    
-    if tokenizer is not None:
-      tokenizer.pad_token = tokenizer.eos_token
 
-    if args.eval_noise_dataset == "google/jigsaw_toxicity_pred":
-        data_dir = os.path.join("jigsaw-toxic-comment-classification-challenge")
-    else:
-        data_dir = None
+    data_dir = None
     print(data_dir)
-    
     print(args.dataset_cache_dir)
 
     ds = load_dataset(args.eval_noise_dataset,
@@ -271,6 +264,7 @@ def eval_noise(args, model=None, tokenizer=None):
           ds.save_to_disk(ds_dir)
 
           # to align random seed
+          print("Evaluation dataset is successfully created. Re-run the same program!")
           sys.exit()
     
     ###########################
@@ -301,6 +295,7 @@ def eval_noise(args, model=None, tokenizer=None):
           ds.save_to_disk(ds_dir)
           
           # to align random seed
+          print("Evaluation dataset is successfully created. Re-run the same program!")
           sys.exit()
       
     ds = load_from_disk(ds_dir)

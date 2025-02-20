@@ -117,9 +117,6 @@ def eval_typoglycemia(args):
     fix_seed(args.random_seed)
 
     model, tokenizer, config = load_model(args)
-    
-    if tokenizer is not None:
-      tokenizer.pad_token = tokenizer.eos_token
 
     data_dir = os.path.join("flores200_dataset", "devtest", "eng_Latn.devtest")
     print(data_dir)

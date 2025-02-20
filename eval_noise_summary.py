@@ -134,9 +134,6 @@ def eval_noise_summary(args):
     fix_seed(args.random_seed)
 
     model, tokenizer, config = load_model(args)
-    
-    if tokenizer is not None:
-      tokenizer.pad_token = tokenizer.eos_token
 
     data_dir = None
     print(args.dataset_cache_dir)

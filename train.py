@@ -21,6 +21,7 @@ import sys
 import torch.utils.checkpoint
 
 from utils import *
+from eval_noise import *
 
 def validation_loss(args, data_valid, model, tokenizer):
 
@@ -40,6 +41,13 @@ def validation_loss(args, data_valid, model, tokenizer):
           loss = model(input_ids=input_ids, labels=labels, attention_mask=attention_mask, use_cache=args.use_cache).loss
           loss = loss / num_samples_valid
           loss_valid += loss.detach().cpu().item()
+          
+  with torch.no_grad():
+      args.eval_dataset_size = 200
+      args.balance_label_flag = True
+      args.noise_type = "multi_id"
+      accuracy_id = float(eval_noise(args, model, tokenizer).split(";")[3].strip())
+      print(f'accuracy_id: {accuracy_id}')
   
   return loss_valid
 
@@ -121,8 +129,7 @@ def train(args):
             
             # Process clean document
             clean_doc = clean_doc.strip("\n").strip(" ")
-            #clean_doc = bos_token + clean_doc #"<bos>" + clean_doc
-            clean_doc = clean_doc + bos_token #"<bos>" + clean_doc            
+            clean_doc = clean_doc + bos_token
 
             # Concatenate documents
             clean_document += clean_doc
@@ -196,7 +203,7 @@ def train(args):
         # Create noisy label
         # =======================
         noisy_document_tokens = tokenizer.tokenize(noisy_document)
-        noisy_document_labels = [1] * len(noisy_document_tokens) #copy.deepcopy(noisy_document_tokens)        
+        noisy_document_labels = [1] * len(noisy_document_tokens)       
         start_idx = 0
         end_idx = 1
         for noisy_word, clean_word in zip(noisy_word_list, clean_word_list):
@@ -207,7 +214,7 @@ def train(args):
             if noisy_word.replace(" ", "") in concat_word.replace(" ", ""):
               if noisy_word != clean_word:
                 for idx in range(start_idx, end_idx):
-                  noisy_document_labels[idx] = 0 #tokenizer.pad_token
+                  noisy_document_labels[idx] = 0
                 # to avoid error...
                 if end_idx < len(noisy_document_tokens):
                   if noisy_document_tokens[end_idx] == "Ċ":
@@ -243,7 +250,7 @@ def train(args):
         # Create clean label
         # =======================
         clean_document_tokens = tokenizer.tokenize(clean_document)
-        clean_document_labels = [1] * len(clean_document_tokens) #copy.deepcopy(clean_document_tokens)        
+        clean_document_labels = [1] * len(clean_document_tokens)      
         start_idx = 0
         end_idx = 1
         for noisy_word, clean_word in zip(noisy_word_list, clean_word_list):
@@ -254,7 +261,7 @@ def train(args):
             if clean_word.replace(" ", "") in concat_word.replace(" ", ""):
               if noisy_word != clean_word:
                 for idx in range(start_idx, end_idx):
-                  clean_document_labels[idx] = 0 #tokenizer.pad_token
+                  clean_document_labels[idx] = 0
                 # to avoid error...
                 if end_idx < len(clean_document_tokens):
                   if clean_document_tokens[end_idx] == "Ċ":

@@ -361,10 +361,19 @@ def load_model(args, inference_mode=True):
             text = "Iamacatwomanaaaaaaaaaaaaaaaaaaaaaaaaa."
             for _ in range(10):
                 print(tokenizer.tokenize(text))
-    
-    tokenizer.pad_token = tokenizer.eos_token
-    model.generation_config.pad_token_id = model.generation_config.eos_token_id
-    #print(tokenizer.eos_token_id)
+
+    # In our actual experiment, we overwrote pad_token with eos_token for all the models, 
+    # but it is better to overwrite the value only if it is None.
+    # FYI: Only Gemma2-2b model's pad_token is not None as a default setting.
+    ##############
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    print(tokenizer.pad_token)
+ 
+    if model.generation_config.pad_token_id is None:
+        model.generation_config.pad_token_id = model.generation_config.eos_token_id
+    print(model.generation_config.pad_token_id)
+    ##############
     
     if inference_mode:
         model = torch.compile(model)
