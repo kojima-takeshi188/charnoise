@@ -89,12 +89,12 @@ python main.py --scenario=eval_noise_summary --noise_type=nothing --model_name=g
 python main.py --scenario=eval_typoglycemia --eval_noise_dataset=typoglycemia --model_name=gpt2-xl --trained_param_file_suffix=main --restore_steps=1000
 ```
 
-#### 3-5. Evaluation (Real World Typo - Typo Correction)
+#### 3-5. Evaluation (Real world typo - typo correction)
 ```
 python main.py --scenario=eval_typo --model_name=gpt2-xl --eval_noise_dataset=github-typo-corpus --trained_param_file_suffix=main --restore_steps=1000
 ```
 
-#### 3-6. Evaluation (Real World Typo - Classification)
+#### 3-6. Evaluation (Real world typo - text classification)
 ```
 python main.py --scenario=eval_noise --model_name=gpt2-xl --eval_noise_dataset=sst2 --injection_typo_flag --trained_param_file_suffix=main --restore_steps=1000
 ```
