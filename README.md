@@ -2,7 +2,7 @@
 
 This is the official implementation of `Continual Pre-training on Character-Level Noisy Texts Makes Decoder-based Language Models Robust Few-shot Learners` (Accepted at TACL: Transactions of the Association for Computational Linguistics).
 
-The paper is available at [HERE](https://direct.mit.edu/tacl/article/doi/10.1162/TACL.a.21/132119/Continual-Pre-training-on-Character-level-Noisy).
+The paper is available at [HERE](https://doi.org/10.1162/TACL.a.21).
 
 ## 1. Installation
 
@@ -114,4 +114,18 @@ python main.py --scenario=eval_lmevalharness --model_name=gpt2-xl --lmeval_task=
 #### 3-9. Evaluation (Perplexity)
 ```
 python main.py --scenario=eval_ppl --model_name=gpt2-xl --eval_ppl_dataset=fineweb --trained_param_file_suffix=main --restore_steps=1000
+```
+
+## Citation
+```
+@article{10.1162/TACL.a.21,
+    author = {Kojima, Takeshi and Matsuo, Yutaka and Iwasawa, Yusuke},
+    title = {Continual Pre-training on Character-level Noisy Texts Makes Decoder-based Language Models Robust Few-shot Learners},
+    journal = {Transactions of the Association for Computational Linguistics},
+    volume = {13},
+    pages = {831-847},
+    year = {2025},
+    month = {07},
+    url = {https://doi.org/10.1162/TACL.a.21},
+}
 ```
