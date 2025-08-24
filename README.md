@@ -1,6 +1,8 @@
 # Continual Pre-training on Character-Level Noisy Texts Makes Decoder-based Language Models Robust Few-shot Learners
 
-This is the official implementation of `Continual Pre-training on Character-Level Noisy Texts Makes Decoder-based Language Models Robust Few-shot Learners`.
+This is the official implementation of `Continual Pre-training on Character-Level Noisy Texts Makes Decoder-based Language Models Robust Few-shot Learners` (Accepted at TACL: Transactions of the Association for Computational Linguistics).
+
+The paper is available at [HERE](https://direct.mit.edu/tacl/article/doi/10.1162/TACL.a.21/132119/Continual-Pre-training-on-Character-level-Noisy).
 
 ## 1. Installation
 
